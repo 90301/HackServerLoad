@@ -29,6 +29,7 @@ public class Balance implements ServerInterface{
 	public Balance()
 	{
 		TotalServers = ThreadLocalRandom.current().nextInt(minservers, maxservers + 1);
+		
 		for(int x = 0; x < TotalServers; x++)
 		{
 		HackServer hs = new HackServer(cpuSpeed, cpuCores, cache, ram, cacheSpeed, ramSpeed);
