@@ -19,4 +19,10 @@ public class HackRequest {
 				+ user + ", latencyTracker=" + latencyTracker + "]";
 	}
 	
+	public void addTimeToProcess() {
+		
+		latencyTracker ++;
+		System.out.println("Added time: " + latencyTracker);
+	}
+	
 }

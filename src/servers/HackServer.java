@@ -14,6 +14,7 @@ public class HackServer implements ServerInterface {
         public int cpuLoadHandlingRate, assignedPendingLoad;
         public int completedLoadThisTick;
         public ArrayList<HackRequest> assignedPendingRequests;
+		private Integer cpuCoreNum;
 
         public CpuCore() {
             cpuLoadHandlingRate = 0;
@@ -42,10 +43,12 @@ public class HackServer implements ServerInterface {
         public void tick() {
         	LinkedList<HackRequest> removal = new LinkedList<HackRequest>();
         	int totalCPU = cpuSpeed;
+        	boolean outOfPower = false;
             for (HackRequest req : assignedPendingRequests) {
+            	if (!outOfPower) {
             	Double percentCPUGimp = 1.0;//no gimp
-            	boolean outOfPower = false;
-                req.latencyTracker++;
+            	
+                //req.latencyTracker++;
                 int cpuLoad = req.cpuLoad;
                 if (totalCPU > cpuLoad) {
                 	//enough cpu to spare
@@ -62,16 +65,22 @@ public class HackServer implements ServerInterface {
                 	removal.add(req);
                 	
                 }
-                if (outOfPower) {
-                	break;
-                }
+                
+                
+            	}//end of out of power
+               
             }
             
             //remove everything that is done running
             while (!removal.isEmpty()) {
             	assignedPendingRequests.remove(removal.remove());
             }
-            
+            for (HackRequest req : assignedPendingRequests) {
+            	System.out.println("CPU CORE: " + this.cpuCoreNum);
+            	
+            	
+            	req.addTimeToProcess();
+            }
             /*
             if (assignedPendingLoad < cache) {
                 cpuLoadHandlingRate = maxLoadHandlingRate;
@@ -98,7 +107,7 @@ public class HackServer implements ServerInterface {
     public int cache, ram;
     public int cacheSpeed, ramSpeed;
 
-    public CpuCore[] coreObjects;
+    public ArrayList<CpuCore> coreObjects;
     public LinkedList<HackRequest> unassignedPendingRequests;
 
     
@@ -110,9 +119,13 @@ public class HackServer implements ServerInterface {
         this.ram = ram;
         this.cacheSpeed = cacheSpeed;
         this.ramSpeed = ramSpeed;
-        coreObjects = new CpuCore[cpuCores];
+        //coreObjects = new CpuCore[cpuCores];
+        coreObjects = new ArrayList<CpuCore>();
         for (int i = 0; i < cpuCores; ++i) {
-            coreObjects[i] = new CpuCore();
+        	
+        	CpuCore core = new CpuCore();
+        	core.cpuCoreNum = i;
+            coreObjects.add(core);
         }
         unassignedPendingRequests = new LinkedList<HackRequest>();
     }
@@ -149,7 +162,7 @@ public class HackServer implements ServerInterface {
         }
         
         for (HackRequest req : unassignedPendingRequests) {
-            req.latencyTracker++;
+            req.addTimeToProcess();
         }
     }
 

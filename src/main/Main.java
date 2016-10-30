@@ -17,12 +17,12 @@ public class Main {
 	public static ArrayList<User> allUsers = new ArrayList<User>();
 	public static void main(String[] args) {
 		server = new HackServer(1, 12, 10, 32, 1024, 32);
-		//allServers.add(server);
+		allServers.add(server);
 		loadBal = new Balance();
 		
 		allServers.add(loadBal);
 		
-		for (int i=0;i<100;i++) {
+		for (int i=0;i<1;i++) {
 			genNewUser();
 		}
 		
@@ -33,8 +33,9 @@ public class Main {
 		}
 		
 	}
-	
+	static int turn = 0;
 	public static void tick() {
+		turn ++;
 		for (ServerInterface si : allServers) {
 			si.tick();
 			//System.out.println(((HackServer) si).getRamUse());
@@ -42,11 +43,19 @@ public class Main {
 		for (User u : allUsers) {
 			u.tick();
 		}
+		System.out.println("Tick: " + turn);
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	public static void genNewUser() {
-		User u = new User(loadBal);
+		User u = new User(server);
 		
 		allUsers.add(u);
 	}

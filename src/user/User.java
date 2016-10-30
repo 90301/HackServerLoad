@@ -24,7 +24,7 @@ public class User {
 	
 	public Integer requestPercentageWorking;
 	public Integer minRequestPercentageWorking = 1;
-	public Integer maxRequestPercentageWorking = 10;
+	public Integer maxRequestPercentageWorking = 80;
 	//<= request = fire the event
 	
 	public ServerInterface serverUsed;
