@@ -7,6 +7,7 @@ public class HackRequest {
 	public int cacheReq;
 	public int dataSize;
 	public User user;
+    public int latencyTracker = 0;
 	
 	public HackRequest() {
 		// TODO Auto-generated constructor stub
