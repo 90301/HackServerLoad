@@ -16,28 +16,47 @@ public class HackServer implements ServerInterface {
         }
 
         public void tick() {
+            for (HackRequest req : assignedPendingRequests) {
+                req.latencyTracker++;
+            }
         }
     }
 
     public int cacheUse, ramUse;
-    public LinkedList<Integer> unassignedPendingLoads;
 
     public int cpuSpeed, cpuCores;
     public int cache, ram;
     public int cacheSpeed, ramSpeed;
 
     public CpuCore[] coreObjects;
-    public LinkedList<HackRequest> pendingRequests;
+    public LinkedList<HackRequest> unassignedPendingRequests;
+
+    public HackServer(int cpuSpeed, int cpuCores, int cache, int ram,
+            int cacheSpeed, int ramSpeed) {
+        this.cpuSpeed = cpuSpeed;
+        this.cpuCores = cpuCores;
+        this.cache = cache;
+        this.ram = ram;
+        this.cacheSpeed = cacheSpeed;
+        this.ramSpeed = ramSpeed;
+        coreObjects = new CpuCore[cpuCores];
+        for (int i = 0; i < cpuCores; ++i) {
+            coreObjects[i] = new CpuCore();
+        }
+    }
 
     public void fireRequest(HackRequest request) {
-        pendingRequests.add(request);
+        unassignedPendingRequests.add(request);
     }
 
     public void returnToSender(HackRequest request) {
-        request.user.receiveResponse();
+        request.user.receiveResponse(request.latencyTracker);
     }
 
     public void tick() {
+        for (HackRequest req : unassignedPendingRequests) {
+            req.latencyTracker++;
+        }
     }
 
 }
