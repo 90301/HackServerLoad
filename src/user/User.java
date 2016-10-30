@@ -49,12 +49,25 @@ public class User {
 		}
 	}
 	
+	public void receiveResponse(Integer time) {
+		
+	}
+	
 	/**
 	 * When a request is fired, this picks the request to be sent off
-	 * @return
+	 * @return request to be fired.
 	 */
 	public HackRequest pickRequest() {
 		int requestNum = ThreadLocalRandom.current().nextInt(0, genTotalPercent + 1);
+		
+		for (HackRequest hr : requestTypes.keySet()) {
+			int reqUsed = requestTypes.get(hr);
+			requestNum -= reqUsed;
+			if (requestNum <=0) {
+				return hr;
+			}
+		}
+		
 		
 		return null;
 		
