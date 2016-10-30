@@ -82,9 +82,10 @@ public class User {
 		int requestGamble = ThreadLocalRandom.current().nextInt(0, 100 + 1);
 		if (requestGamble<maxRequestPercentageWorking) {
 			
-			HackRequest hr = this.pickRequest();
-			if (hr!=null)
-			serverUsed.fireRequest(hr);
+			HackRequest hr = new HackRequest(this.pickRequest());
+			if (hr!=null) {
+				serverUsed.fireRequest(hr);
+			}
 		}
 		
 		

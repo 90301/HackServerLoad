@@ -9,6 +9,14 @@ public class HackRequest {
 	public User user;
     public int latencyTracker = 0;
 	
+	public HackRequest(HackRequest hackRequest) {
+		this.cpuLoad = hackRequest.cpuLoad;
+		this.cacheReq = hackRequest.cacheReq;
+		this.dataSize = hackRequest.dataSize;
+		this.user = hackRequest.user;
+		this.latencyTracker = 0;
+	}
+
 	public HackRequest() {
 		// TODO Auto-generated constructor stub
 	}

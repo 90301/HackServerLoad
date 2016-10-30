@@ -155,10 +155,12 @@ public class HackServer implements ServerInterface {
        
         
         for (CpuCore cpu : coreObjects) {
+        	
         	while (cpu.canHandleMore() && !unassignedPendingRequests.isEmpty()) {
         		cpu.assignedPendingRequests.add(unassignedPendingRequests.removeFirst());
         	}
-        	cpu.tick();
+        	
+        	//cpu.tick();
         }
         
         for (HackRequest req : unassignedPendingRequests) {
