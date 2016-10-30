@@ -12,5 +12,11 @@ public class HackRequest {
 	public HackRequest() {
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public String toString() {
+		return "HackRequest [cpuLoad=" + cpuLoad + ", cacheReq=" + cacheReq + ", dataSize=" + dataSize + ", user="
+				+ user + ", latencyTracker=" + latencyTracker + "]";
+	}
 	
 }

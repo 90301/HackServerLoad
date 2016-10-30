@@ -29,7 +29,8 @@ public class User {
 	
 	public ServerInterface serverUsed;
 	
-	public User() {
+	public User(ServerInterface serverUsed) {
+		this.serverUsed = serverUsed;
 		genRequests();
 		
 	}
@@ -46,6 +47,8 @@ public class User {
 			requestTypes.put(hr, perChance);
 			
 			genTotalPercent += perChance;
+			
+			System.out.println("Gen request: " + hr);
 			
 		}
 	}
@@ -76,7 +79,16 @@ public class User {
 	
 	
 	public void tick() {
-		int requestGamble = ThreadLocalRandom.current().nextInt(minDataSize, maxDataSize + 1);
+		int requestGamble = ThreadLocalRandom.current().nextInt(0, 100 + 1);
+		if (requestGamble<maxRequestPercentageWorking) {
+			
+			HackRequest hr = this.pickRequest();
+			if (hr!=null)
+			serverUsed.fireRequest(hr);
+		}
+		
+		
+		
 	}
 
 }

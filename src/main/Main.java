@@ -17,9 +17,11 @@ public class Main {
 		server = new HackServer(1, 12, 10, 32, 1024, 32);
 		allServers.add(server);
 		
-		User u = new User();
+		for (int i=0;i<100;i++) {
+			genNewUser();
+		}
 		
-		allUsers.add(u);
+
 		
 		for (int i=0;i<100;i++) {
 			tick();
@@ -30,10 +32,18 @@ public class Main {
 	public static void tick() {
 		for (ServerInterface si : allServers) {
 			si.tick();
+			//System.out.println(((HackServer) si).getRamUse());
 		}
 		for (User u : allUsers) {
 			u.tick();
 		}
+	}
+	
+	
+	public static void genNewUser() {
+		User u = new User(server);
+		
+		allUsers.add(u);
 	}
 	
 	
