@@ -16,6 +16,8 @@ public class HackServer implements ServerInterface {
         public int completedLoadThisTick;
         public ArrayList<HackRequest> assignedPendingRequests;
 		private Integer cpuCoreNum;
+		
+		public Integer cpuLeft = 0;
 
         public CpuCore() {
             cpuLoadHandlingRate = 0;
@@ -39,6 +41,16 @@ public class HackServer implements ServerInterface {
         	} else {
         		return false;
         	}
+        }
+        /**
+         * Shows the cpu load (in percent, rounded to 1
+         * @return cpu load percent as an integer. 
+         */
+        public Integer getLoad() {
+        	Integer loadPercent = cpuSpeed*100/cpuLeft;
+        	
+			return loadPercent;
+        	
         }
         
         public void tick() {
@@ -70,6 +82,12 @@ public class HackServer implements ServerInterface {
                 
             	}//end of out of power
                
+            }
+            
+            if (outOfPower) {
+            	cpuLeft = 0;
+            } else {
+            	cpuLeft = totalCPU;
             }
             
             //remove everything that is done running
