@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 import servers.HackRequest;
+import servers.ServerInterface;
 
 public class User {
 	public int workingHourStart,workingHourEnd;
@@ -26,7 +27,7 @@ public class User {
 	public Integer maxRequestPercentageWorking = 10;
 	//<= request = fire the event
 	
-	
+	public ServerInterface serverUsed;
 	
 	public User() {
 		genRequests();
@@ -71,6 +72,11 @@ public class User {
 		
 		return null;
 		
+	}
+	
+	
+	public void tick() {
+		int requestGamble = ThreadLocalRandom.current().nextInt(minDataSize, maxDataSize + 1);
 	}
 
 }
