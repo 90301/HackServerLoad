@@ -41,7 +41,7 @@ public class Balance implements ServerInterface{
 	public void fireRequest(HackRequest request) 
 	{
 		
-		if(location > TotalServers)
+		if(location >= TotalServers)
 		{
 		location = 0;
 		}
@@ -51,9 +51,9 @@ public class Balance implements ServerInterface{
 	@Override
 	public void tick() 
 	{
-		for (int x = 0; x < TotalServers; x++ )
+		for (ServerInterface si : Servers)
 		{
-			Servers.get(x).tick();
+			si.tick();
 		}
 	}
 

@@ -55,7 +55,7 @@ public class Main {
 	
 	
 	public static void genNewUser() {
-		User u = new User(server);
+		User u = new User(loadBal);
 		
 		allUsers.add(u);
 	}
