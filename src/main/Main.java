@@ -11,6 +11,7 @@ public class Main {
 
 	//TODO make load balancer class
 	
+	private static final int USERS = 1000;
 	public static ServerInterface server;
 	public static ServerInterface loadBal;
 	public static ArrayList<ServerInterface> allServers = new ArrayList<ServerInterface>();
@@ -22,7 +23,7 @@ public class Main {
 		
 		allServers.add(loadBal);
 		
-		for (int i=0;i<1;i++) {
+		for (int i=0;i<USERS;i++) {
 			genNewUser();
 		}
 		
@@ -45,12 +46,14 @@ public class Main {
 		}
 		System.out.println("Tick: " + turn);
 		
+		/*
 		try {
 			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 	
 	

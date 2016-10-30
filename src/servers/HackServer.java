@@ -2,6 +2,7 @@ package servers;
 
 import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 
 public class HackServer implements ServerInterface {
@@ -166,6 +167,10 @@ public class HackServer implements ServerInterface {
         for (HackRequest req : unassignedPendingRequests) {
             req.addTimeToProcess();
         }
+    }
+    
+    public Collection<CpuCore> getCpuCores() {
+    	return coreObjects;
     }
 
 }
