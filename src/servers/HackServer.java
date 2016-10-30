@@ -56,6 +56,16 @@ public class HackServer implements ServerInterface {
     }
 
     public int getRamUse() {
+        int use = 0;
+        for (HackRequest req : unassignedPendingRequests) {
+            use += req.dataSize;
+        }
+        for (CpuCore core : coreObjects) {
+            for (HackRequest req : core.assignedPendingRequests) {
+                use += req.dataSize;
+            }
+        }
+        return use;
     }
 
     public void fireRequest(HackRequest request) {
