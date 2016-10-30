@@ -54,7 +54,7 @@ public class User {
 	}
 	
 	public void receiveResponse(Integer time) {
-		
+		System.out.println("Time to process request: " + time);
 	}
 	
 	/**

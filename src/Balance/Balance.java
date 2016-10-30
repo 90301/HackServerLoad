@@ -26,7 +26,7 @@ public class Balance implements ServerInterface{
 	public Integer ramSpeed = 64;
 	
 	
-	Balance()
+	public Balance()
 	{
 		TotalServers = ThreadLocalRandom.current().nextInt(minservers, maxservers + 1);
 		for(int x = 0; x < TotalServers; x++)
