@@ -5,24 +5,33 @@ import java.util.LinkedList;
 public class HackServer implements ServerInterface {
 
     public class CpuCore {
-        public int cpuLoadHandlingRate, maxLoadHandlingRate;
-        public int assignedPendingLoad, completedLoadThisTick;
+        public final int maxLoadHandlingRate;
+        public int cpuLoadHandlingRate, assignedPendingLoad;
+        public int completedLoadThisTick;
         public LinkedList<HackRequest> assignedPendingRequests;
 
         public CpuCore() {
             cpuLoadHandlingRate = 0;
-            maxLoadHandlingRate = Math.min(cacheSpeed, cpuSpeed);
+            maxLoadHandlingRate = cpuSpeed;
             assignedPendingLoad = 0;
+            assignedPendingRequests = new LinkedList<HackRequest>();
         }
 
         public void tick() {
             for (HackRequest req : assignedPendingRequests) {
                 req.latencyTracker++;
             }
+            if (assignedPendingLoad < cache) {
+                cpuLoadHandlingRate = maxLoadHandlingRate;
+                completedLoadThisTick = assignedPendingLoad;
+                assignedPendingLoad = 0;
+            }
         }
     }
 
-    public int cacheUse, ramUse;
+    public static int lifeLoad(HackRequest req) {
+        return req.cpuLoad * req.dataSize;
+    }
 
     public int cpuSpeed, cpuCores;
     public int cache, ram;
@@ -43,6 +52,10 @@ public class HackServer implements ServerInterface {
         for (int i = 0; i < cpuCores; ++i) {
             coreObjects[i] = new CpuCore();
         }
+        unassignedPendingRequests = new LinkedList<HackRequest>();
+    }
+
+    public int getRamUse() {
     }
 
     public void fireRequest(HackRequest request) {
